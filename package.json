@@ -1,0 +1,46 @@
+{
+  "name": "legend-market",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A Quasar Project",
+  "author": "maxim1955 <nikitin.maxim.99@gmail.com>",
+  "scripts": {
+    "build": "quasar build",
+    "dev": "quasar dev",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.14",
+    "@quasar/extras": "^1.0.0",
+    "@vue/apollo-composable": "^4.0.0-beta.4",
+    "core-js": "^3.6.5",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
+    "pinia": "^2.0.36",
+    "quasar": "^2.6.0",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0"
+  },
+  "devDependencies": {
+    "@quasar/app-webpack": "^3.0.0",
+    "@quasar/quasar-app-extension-apollo": "^2.0.0-beta.5",
+    "vue-cli-plugin-pinia": "~0.2.3"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 12.22.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  },
+  "productName": "Quasar App"
+}
