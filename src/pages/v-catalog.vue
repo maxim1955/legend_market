@@ -53,7 +53,7 @@ Add to basket
 */
 const addToBasket = (res) => {
   store.GET_BASKET(res)
-  console.log(res)
+  
 }
 console.log(store.basket)
 

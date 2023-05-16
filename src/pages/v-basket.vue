@@ -27,7 +27,7 @@
             class="self-center col flex justify-end">
           <q-btn
               class="bg-green-2 q-pl-xl-xl"
-              @click="deleteCoin">Удалить
+              @click="deleteCoin(res,index)">Удалить
           </q-btn>
         </q-card-section>
       </q-card-section>
@@ -40,6 +40,10 @@ import {getCoin} from "stores/coin";
 const store = getCoin()
 const cart = store.basket
 console.log(cart)
+
+const deleteCoin= (res,index)=>{
+  store.DELETE_FROM_BASKET(res)
+}
 </script>
 
 <style scoped>

@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia';
 import gql from "graphql-tag";
 import {useQuery} from "@vue/apollo-composable";
+import {computed} from "vue";
 
 
 export const getCoin = defineStore('counter', {
@@ -21,7 +22,7 @@ export const getCoin = defineStore('counter', {
                         quantity
                     }
                 }`)
-            state.coin = result.value?.catalog ?? []
+            state.coin = () => result.value?.catalog ?? []
             return state.coin
         },
 
@@ -30,13 +31,17 @@ export const getCoin = defineStore('counter', {
         }
     },
     actions: {
+
         GET_BASKET(res) {
             if (this.basket.includes(res)) {
 
             } else {
                 this.basket.push(res)
-
             }
+        },
+        DELETE_FROM_BASKET(res) {
+            const coinIndex = this.basket.findIndex((todo) => todo === res);
+            this.basket.splice(coinIndex, 1)
         }
     }
 
