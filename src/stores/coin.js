@@ -1,28 +1,18 @@
 import {defineStore} from 'pinia';
 import gql from "graphql-tag";
 import {useQuery} from "@vue/apollo-composable";
-import {computed} from "vue";
 
 
 export const getCoin = defineStore('counter', {
 
     state: () => ({
         coin: [],
+        loading: false,
         basket: [],
     }),
 
     getters: {
-        GET_COIN_FROM_DB(state) {
-            const {result} = useQuery(gql`
-                query catalog {
-                    catalog {
-                        name
-                        price
-                        image
-                        quantity
-                    }
-                }`)
-            state.coin = () => result.value?.catalog ?? []
+        SET_COIN_FROM_DB(state) {
             return state.coin
         },
 
@@ -31,8 +21,20 @@ export const getCoin = defineStore('counter', {
         }
     },
     actions: {
-
+        async GET_COIN_FROM_DB() {
+            const {result} = await useQuery(gql`
+                query catalog {
+                    catalog {
+                        name
+                        price
+                        image
+                        quantity
+                    }
+                }`)
+            this.coin = result.value?.catalog ?? []
+        },
         GET_BASKET(res) {
+
             if (this.basket.includes(res)) {
 
             } else {
@@ -40,9 +42,8 @@ export const getCoin = defineStore('counter', {
             }
         },
         DELETE_FROM_BASKET(res) {
-            const coinIndex = this.basket.findIndex((todo) => todo === res);
+            const coinIndex = this.basket.findIndex((item) => item === res);
             this.basket.splice(coinIndex, 1)
         }
     }
-
 })

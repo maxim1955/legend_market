@@ -47,16 +47,15 @@ GET_COIN_FROM_HASURA
 const store = getCoin()
 store.GET_COIN_FROM_DB
 const coin = store.coin
+console.log(store.coin)
 
 /*
 Add to basket
 */
 const addToBasket = (res) => {
   store.GET_BASKET(res)
-  
 }
 console.log(store.basket)
-
 
 
 </script>
