@@ -25,8 +25,6 @@ import {useAuth0} from '@auth0/auth0-vue';
 const router = useRouter()
 const {loginWithRedirect, user, isAuthenticated} = useAuth0()
 
-const email = ref('')
-const password = ref('')
 /*
 * -------------register--------
 */
@@ -45,13 +43,7 @@ console.log(isAuthenticated)
 const logged = () => {
   router.push('/loggedin')
 }
-/*
-* -------------reset input--------
-*/
-const reset = () => {
-  email.value = ''
-  password.value = ''
-}
+
 </script>
 
 

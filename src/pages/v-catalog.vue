@@ -11,6 +11,16 @@
           class="flex-center bg-white flex justify-end"
           style="max-width: 30%; border-radius: 10px"
       />
+
+    </div>
+    <div class="input" style="max-width: 25%">
+      <q-input
+          dark
+          square
+          v-model="inputSearch"
+          type="search"
+      />
+      <q-btn @click="searchHandler()" class="bg-white">Search</q-btn>
     </div>
     <div class="catalog_wrapper row q-pt-xl flex justify-center wrap">
       <q-card
@@ -93,7 +103,7 @@ const sortcoin = ref([]);
 const sortBycoin = (model) => {
   sortcoin.value.length = 0
   coin.value.map((elem) => {
-    if (elem.stock === model.label) {
+    if (elem.stock === model.value) {
       sortcoin.value.push(elem)
     } else {
       return
@@ -103,13 +113,21 @@ const sortBycoin = (model) => {
 
 const filteredBooks = computed(() => {
   if (sortcoin.value.length) {
-    console.log("true")
     return sortcoin.value
   } else {
-    console.log("false")
     return coin.value
   }
 })
+
+/*
+search COIN
+*/
+const inputSearch = ref('')
+const searchHandler = () => {
+  return filteredBooks.value.filter(elem => {
+    return elem.name.includes(inputSearch)
+  })
+}
 
 </script>
 <style>
