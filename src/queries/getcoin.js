@@ -7,5 +7,6 @@ export const queryCoin = (gql`
             price
             image
             quantity
+            stock
         }
     }`)

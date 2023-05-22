@@ -1,10 +1,21 @@
 <template>
   <q-page class="q-pa-xl">
     <div class="text-center text-white text-h2">Купить валюту</div>
+    <div class="q-gutter-y-md column bg-black flex items-end">
+      <q-select
+          filled
+          color="purple-12"
+          v-model="model"
+          :options="option"
+          :select="sortBycoin(model)"
+          class="flex-center bg-white flex justify-end"
+          style="max-width: 30%; border-radius: 10px"
+      />
+    </div>
     <div class="catalog_wrapper row q-pt-xl flex justify-center wrap">
       <q-card
           class="my-card row col-xl-3 col-sm-12 col-md-6 col-xs-12 q-pa-sm q-ma-lg flex wrap"
-          v-for="(res,index) of coin"
+          v-for="res of filteredBooks"
           :key="res.name">
 
         <q-card-section class="col-12 q-pa-none bg-dark row flex justify-center ">
@@ -35,6 +46,7 @@
 
 <script setup>
 import {getCoin} from "stores/coin";
+import {computed, ref} from "vue";
 
 
 /*
@@ -43,15 +55,61 @@ GET_COIN_FROM_HASURA
 const store = getCoin()
 store.GET_COIN_FROM_DB()
 const coin = store.SET_COIN_FROM_DB
+console.log(coin);
+
 /*
 Add to basket
 */
-
 const addToBasket = (res, index) => {
   const bsk = {...res}
   store.GET_BASKET(bsk, res)
   console.log(index);
 }
+
+/*
+SortCOIN
+*/
+
+const option = [
+  {
+    label: "Криптовалюта",
+    value: "Криптовалюта"
+  },
+
+  {
+    label: "Валюта",
+    value: "Валюта"
+  },
+  {
+    label: "Все Валюты",
+    value: "Все Валюты"
+  },
+
+];
+
+//sort by genre
+const model = ref("Все валюты");
+const sortcoin = ref([]);
+const sortBycoin = (model) => {
+  sortcoin.value.length = 0
+  coin.value.map((elem) => {
+    if (elem.stock === model.label) {
+      sortcoin.value.push(elem)
+    } else {
+      return
+    }
+  })
+}
+
+const filteredBooks = computed(() => {
+  if (sortcoin.value.length) {
+    console.log("true")
+    return sortcoin.value
+  } else {
+    console.log("false")
+    return coin.value
+  }
+})
 
 </script>
 <style>

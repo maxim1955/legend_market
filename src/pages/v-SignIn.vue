@@ -6,33 +6,9 @@
           class="q-gutter-md"
       >
         <h2 class="text-white text-center">Регистрация</h2>
-        <q-input
-            counter
-            label="Your name *"
-            label-color="blue"
-            color="blue"
-            outlined
-            dark
-            v-model="email"
-        />
-
-        <q-input
-            counter
-            autogrow
-            square
-            label="Password"
-            type="password"
-            label-color="blue"
-            color="blue"
-            outlined
-            dark
-            v-model="password"
-        />
-        <div>
-          <q-btn label="Submit" type="submit" @click="submit" color="primary"/>
-          <q-btn label="Reset" type="reset" @click="reset" color="primary" flat class="q-ml-sm"/>
+        <div class="text-center q-mt-xl">
+          <q-btn label="Войти на биржу" type="submit" @click="submit" color="primary" size="30px" rounded/>
         </div>
-        <q-btn label="Уже есть аккаунт?" @click="logged" color="red" flat class="q-ml-sm"/>
       </q-form>
     </div>
   </q-page>
