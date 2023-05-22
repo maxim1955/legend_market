@@ -1,49 +1,67 @@
 import {defineStore} from 'pinia';
-import gql from "graphql-tag";
 import {useQuery} from "@vue/apollo-composable";
+import {computed, ref} from "vue";
+import {queryCoin} from "src/queries/getcoin";
 
 
-export const getCoin = defineStore('counter', {
+export const getCoin = defineStore("coin", {
 
     state: () => ({
-        coin: [],
-        loading: false,
-        basket: [],
+        coin: ref([]),
+        basket: ref([]),
+        totalValue: 0
     }),
-
     getters: {
         SET_COIN_FROM_DB(state) {
-            return state.coin
+            return computed(() => state.coin)
         },
 
         SET_BASKET(state) {
-            return state.basket
+            return computed(() => state.basket)
         }
     },
     actions: {
-        async GET_COIN_FROM_DB() {
-            const {result} = await useQuery(gql`
-                query catalog {
-                    catalog {
-                        name
-                        price
-                        image
-                        quantity
-                    }
-                }`)
-            this.coin = result.value?.catalog ?? []
+        GET_COIN_FROM_DB() {
+            let {result} = useQuery(queryCoin)
+            this.coin = computed(() => result.value?.catalog ?? [])
         },
-        GET_BASKET(res) {
+        /*
+        get basket
+        */
+        GET_BASKET(bsk) {
+            if (this.basket.length) {
+                let isProductExists = false;
+                this.basket.map((i) => {
+                    if (i.name === bsk.name) {
+                        isProductExists = true;
+                        i.quantity++;
+                        this.totalValue += i.price
+                    }
+                    return i;
+                });
+                if (!isProductExists) {
+                    this.basket.push(bsk);
+                }
+            } else {
+                this.totalValue += bsk.price
+                bsk.quantity = 1
+                this.basket.push(bsk);
 
-            if (this.basket.includes(res)) {
+            }
+
+        },
+        DELETE_FROM_BASKET(bsk) {
+            const coinIndex = this.basket.findIndex((item) => item === bsk);
+            if (bsk.quantity > 1) {
+                this.totalValue -= bsk.price
+                bsk.quantity--
 
             } else {
-                this.basket.push(res)
+                this.totalValue -= bsk.price
+                this.basket.splice(coinIndex, 1)
             }
-        },
-        DELETE_FROM_BASKET(res) {
-            const coinIndex = this.basket.findIndex((item) => item === res);
-            this.basket.splice(coinIndex, 1)
+
+
         }
     }
 })

@@ -6,6 +6,10 @@ module.exports = {
       name: 'my-service',
       url: 'https://legend-market.hasura.app/v1/graphql',
     },
+    getAuth:{
+
+    },
+
     // Files processed by the extension
     includes: ['src/**/*.vue', 'src/**/*.js', 'src/**/*.ts'],
   },

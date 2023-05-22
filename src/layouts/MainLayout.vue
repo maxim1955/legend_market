@@ -6,20 +6,21 @@
           <router-link to="/main" class="text-center text-white text-italic">LegendMarket</router-link>
         </q-toolbar-title>
         <q-tabs
-          inline-label
-          class="col-7"
+            inline-label
+            class="col-7"
         >
           <q-route-tab to="/main" label="Главная" class="text-white justify-between" icon="mail"/>
           <q-route-tab to="/basket" label="Корзина" class="text-white justify-between" icon="mail"/>
           <q-route-tab to="/catalog" label="Каталог" class="text-white" icon="mail"/>
           <q-route-tab to="/about" label="О нас" class="text-white" icon="book"/>
-          <q-route-tab to="/" label="Выйти" class="text-red" icon="book"/>
+          <q-btn @click="signOut()">Выйти</q-btn>
         </q-tabs>
+        <q-item>{{user.name}}</q-item>
       </q-toolbar>
     </q-header>
     <q-page-container class="bg-black">
       <router-view/>
-    </q-page-container >
+    </q-page-container>
     <q-footer elevated class="bg-black text-white main">
       <q-toolbar>
         <q-toolbar-title>
@@ -31,6 +32,15 @@
     </q-footer>
   </q-layout>
 </template>
+<script setup>
+import {useAuth0} from '@auth0/auth0-vue';
+
+const {logout,user} = useAuth0()
+const signOut = () => {
+  logout()
+}
+
+</script>
 <style>
 .header_title {
   font-family: Roboto;

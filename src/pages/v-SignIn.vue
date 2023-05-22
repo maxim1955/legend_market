@@ -2,31 +2,31 @@
   <q-page>
     <div class="q-pa-md absolute-center" style="max-width: 400px">
       <q-form
-        @submit.prevent
-        class="q-gutter-md"
+          @submit.prevent
+          class="q-gutter-md"
       >
         <h2 class="text-white text-center">Регистрация</h2>
         <q-input
-          counter
-          label="Your name *"
-          label-color="blue"
-          color="blue"
-          outlined
-          dark
-          v-model="email"
+            counter
+            label="Your name *"
+            label-color="blue"
+            color="blue"
+            outlined
+            dark
+            v-model="email"
         />
 
         <q-input
-          counter
-          autogrow
-          square
-          label="Password"
-          type="password"
-          label-color="blue"
-          color="blue"
-          outlined
-          dark
-          v-model="password"
+            counter
+            autogrow
+            square
+            label="Password"
+            type="password"
+            label-color="blue"
+            color="blue"
+            outlined
+            dark
+            v-model="password"
         />
         <div>
           <q-btn label="Submit" type="submit" @click="submit" color="primary"/>
@@ -44,23 +44,29 @@
 */
 import {useRouter} from "vue-router";
 import {ref} from "vue";
+import {useAuth0} from '@auth0/auth0-vue';
 
 const router = useRouter()
+const {loginWithRedirect, user, isAuthenticated} = useAuth0()
+
 const email = ref('')
 const password = ref('')
 /*
 * -------------register--------
 */
-const submit = ()=>{
+const submit = () => {
+  loginWithRedirect()
   router.push('/main')
 }
+console.log(user)
+console.log(isAuthenticated)
 
 /*
 * redirect to loggedin
 */
 
 
-const logged =()=>{
+const logged = () => {
   router.push('/loggedin')
 }
 /*

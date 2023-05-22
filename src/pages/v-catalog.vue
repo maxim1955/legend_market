@@ -2,10 +2,9 @@
   <q-page class="q-pa-xl">
     <div class="text-center text-white text-h2">Купить валюту</div>
     <div class="catalog_wrapper row q-pt-xl flex justify-center wrap">
-
       <q-card
           class="my-card row col-xl-3 col-sm-12 col-md-6 col-xs-12 q-pa-sm q-ma-lg flex wrap"
-          v-for="res of coin"
+          v-for="(res,index) of coin"
           :key="res.name">
 
         <q-card-section class="col-12 q-pa-none bg-dark row flex justify-center ">
@@ -13,13 +12,11 @@
               :src="res.image"
               width="40%"
               class="q-pl-xl bg-dark card_img"
-
           />
-
           <q-card-actions class="justify-around">
             <q-card-section>
               <div class="text-h6 text-white">{{ res.name }}</div>
-              <div class="text-h5 text-white">{{ res.price }}</div>
+              <div class="text-h5 text-white">${{ res.price }}</div>
             </q-card-section>
           </q-card-actions>
 
@@ -27,7 +24,7 @@
               class="self-center col flex justify-end">
             <q-btn
                 class="bg-green-2 q-pl-xl-xl"
-                @click="addToBasket(res)">Купить
+                @click="addToBasket(res,index)">Купить
             </q-btn>
           </q-card-section>
         </q-card-section>
@@ -43,20 +40,18 @@ import {getCoin} from "stores/coin";
 /*
 GET_COIN_FROM_HASURA
 */
-
 const store = getCoin()
-store.GET_COIN_FROM_DB
-const coin = store.coin
-console.log(store.coin)
-
+store.GET_COIN_FROM_DB()
+const coin = store.SET_COIN_FROM_DB
 /*
 Add to basket
 */
-const addToBasket = (res) => {
-  store.GET_BASKET(res)
-}
-console.log(store.basket)
 
+const addToBasket = (res, index) => {
+  const bsk = {...res}
+  store.GET_BASKET(bsk, res)
+  console.log(index);
+}
 
 </script>
 <style>

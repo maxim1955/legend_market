@@ -4,8 +4,7 @@ import {boot} from 'quasar/wrappers'
 import {getClientOptions} from 'src/apollo'
 
 
-export default boot(
-    /* async */ ({app}) => {
+export default boot(({app}) => {
         const options = getClientOptions(app)
         const apolloClient = new ApolloClient(options)
         const apolloClients = {
