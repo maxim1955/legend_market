@@ -1,38 +1,54 @@
 <template>
   <q-page class="q-pa-xl">
     <div class="text-center text-white text-h2">Купить валюту</div>
-    <div class="q-gutter-y-md column bg-black flex items-end">
-      <q-select
+    <div class="sortedBox row flex col reverse q-mt-md">
+      <div class="q-gutter-y-md column bg-black flex items-center q-pl-md rounded-borders">
+        <q-select
           filled
           color="purple-12"
           v-model="model"
           :options="option"
-          :select="sortBycoin(model)"
-          class="flex-center bg-white flex justify-end"
-          style="max-width: 30%; border-radius: 10px"
-      />
-
-    </div>
-    <div class="input" style="max-width: 25%">
-      <q-input
           dark
-          square
+          :select="sortBycoin(model)"
+          class="flex-center flex justify-end"
+        />
+      </div>
+      <div class="sortdedByDesk">
+        <q-select
+          filled
+          color="purple-12"
+          dark
+          v-model="sortedCoin"
+          :options="sortParams"
+          :select="selectSort(sortedCoin)"
+          label="Сортирвать по цене"
+          class="q-pl-md"
+        />
+      </div>
+      <div class="input" style="max-width: 25%">
+        <q-input
+          dark
+          filled
+          outlined
+          label="Поиск"
           v-model="inputSearch"
           type="search"
-      />
-      <q-btn @click="searchHandler()" class="bg-white">Search</q-btn>
+        />
+      </div>
     </div>
+
+
     <div class="catalog_wrapper row q-pt-xl flex justify-center wrap">
       <q-card
-          class="my-card row col-xl-3 col-sm-12 col-md-6 col-xs-12 q-pa-sm q-ma-lg flex wrap"
-          v-for="res of filteredBooks"
-          :key="res.name">
+        class="my-card row col-xl-3 col-sm-12 col-md-6 col-xs-12 q-pa-sm q-ma-lg flex wrap"
+        v-for="res of searchHandler"
+        :key="res.name">
 
         <q-card-section class="col-12 q-pa-none bg-dark row flex justify-center ">
           <q-img
-              :src="res.image"
-              width="40%"
-              class="q-pl-xl bg-dark card_img"
+            :src="res.image"
+            width="40%"
+            class="q-pl-xl bg-dark card_img"
           />
           <q-card-actions class="justify-around">
             <q-card-section>
@@ -42,10 +58,10 @@
           </q-card-actions>
 
           <q-card-section
-              class="self-center col flex justify-end">
+            class="self-center col flex justify-end">
             <q-btn
-                class="bg-green-2 q-pl-xl-xl"
-                @click="addToBasket(res,index)">Купить
+              class="bg-green-2 q-pl-xl-xl"
+              @click="addToBasket(res,index)">Купить
             </q-btn>
           </q-card-section>
         </q-card-section>
@@ -77,7 +93,7 @@ const addToBasket = (res, index) => {
 }
 
 /*
-SortCOIN
+filterCOIN
 */
 
 const option = [
@@ -111,7 +127,7 @@ const sortBycoin = (model) => {
   })
 }
 
-const filteredBooks = computed(() => {
+const filteredCoin = computed(() => {
   if (sortcoin.value.length) {
     return sortcoin.value
   } else {
@@ -123,11 +139,42 @@ const filteredBooks = computed(() => {
 search COIN
 */
 const inputSearch = ref('')
-const searchHandler = () => {
-  return filteredBooks.value.filter(elem => {
-    return elem.name.includes(inputSearch)
+const searchHandler = computed(() => {
+  return filteredCoin.value.filter((elem) => {
+    return elem.name.toLowerCase().includes(inputSearch.value.toLowerCase())
   })
+})
+console.log(searchHandler)
+
+/*
+filteredCoin
+*/
+const sortedCoin = ref('По цене')
+const sortByAsc = (d1, d2) => {
+  return (d1.price > d2.price) ? 1 : -1;
 }
+const sortByDesk = (d1, d2) => {
+  return (d1.price < d2.price) ? 1 : -1;
+}
+const selectSort = (option) => {
+  switch (option.value) {
+    case 'По возрастанию' :
+      return searchHandler.value.sort(sortByAsc);
+    case 'По убыванию' :
+      return searchHandler.value.sort(sortByDesk);
+  }
+}
+
+const sortParams = [
+  {
+    label: "По возрастанию",
+    value: "По возрастанию"
+  },
+  {
+    label: "По убыванию",
+    value: "По убыванию"
+  }
+]
 
 </script>
 <style>
