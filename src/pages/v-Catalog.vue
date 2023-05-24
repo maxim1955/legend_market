@@ -37,7 +37,6 @@
       </div>
     </div>
 
-
     <div class="catalog_wrapper row q-pt-xl flex justify-center wrap">
       <q-card
         class="my-card row col-xl-3 col-sm-12 col-md-6 col-xs-12 q-pa-sm q-ma-lg flex wrap"
@@ -73,8 +72,6 @@
 <script setup>
 import {getCoin} from "stores/coin";
 import {computed, ref} from "vue";
-
-
 /*
 GET_COIN_FROM_HASURA
 */
@@ -110,7 +107,6 @@ const option = [
     label: "Все Валюты",
     value: "Все Валюты"
   },
-
 ];
 
 //sort by genre

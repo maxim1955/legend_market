@@ -25,7 +25,6 @@ export const getCoin = defineStore("coin", {
             let {result} = useQuery(queryCoin)
             this.coin = computed(() => result.value?.catalog ?? [])
         },
-
         /*
         get basket
         */
@@ -47,10 +46,8 @@ export const getCoin = defineStore("coin", {
                 this.totalValue += bsk.price
                 bsk.quantity = 1
                 this.basket.push(bsk);
-
             }
         },
-
         DELETE_FROM_BASKET(bsk) {
             const coinIndex = this.basket.findIndex((item) => item === bsk);
             if (bsk.quantity > 1) {

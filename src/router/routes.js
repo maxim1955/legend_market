@@ -4,9 +4,9 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {path: '/main', component: () => import('pages/v-IndexPage.vue')},
-      {path: '/catalog',props:true, component: () => import('pages/v-catalog.vue')},
-      {path: '/basket',props:true, component: () => import('pages/v-basket.vue')},
-      {path: '/about', component: () => import('pages/v-about.vue')},
+      {path: '/catalog',props:true, component: () => import('pages/v-Catalog.vue')},
+      {path: '/basket',props:true, component: () => import('pages/v-Basket.vue')},
+      {path: '/about', component: () => import('pages/v-About.vue')},
     ]
   },
 

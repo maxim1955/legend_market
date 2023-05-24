@@ -1,8 +1,9 @@
 const {configure} = require('quasar/wrappers');
 
+
 module.exports = configure(function (ctx) {
   return {
-    boot: ['apollo','pinia','auth'],
+    boot: ['apollo', 'pinia', 'auth'],
 
     css: [
       'app.scss'
