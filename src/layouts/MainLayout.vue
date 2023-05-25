@@ -1,23 +1,85 @@
 <template>
   <q-layout view="hhh lpR fff">
-    <q-header class="bg-black text-white flex row" height-hint="98" style="height: 120px">
-      <q-toolbar>
-        <q-toolbar-title class="text-h2 header_title col-4 text-center">
-          <router-link to="/main" class="text-center text-white text-italic">LegendMarket</router-link>
+    <q-header class="bg-black text-white flex" height-hint="98" style="height: 100px">
+      <q-toolbar class="row">
+        <q-toolbar-title shrink>
+          <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu" v-if="screenSize"/>
+          <router-link to="/main" class="text-center text-white text-italic text-h1">LegendMarket</router-link>
         </q-toolbar-title>
-        <q-tabs
-            inline-label
-            class="col-6"
-        >
-          <q-route-tab to="/main" label="Главная" class="text-white justify-between" icon="mail"/>
-          <q-route-tab to="/basket" label="Корзина" class="text-white justify-between" icon="mail"/>
-          <q-route-tab to="/catalog" label="Каталог" class="text-white" icon="mail"/>
-          <q-route-tab to="/about" label="О нас" class="text-white" icon="book"/>
-          <q-btn @click="signOut()">Выйти</q-btn>
-        </q-tabs>
-        <q-item class="col-2">{{user.name}}</q-item>
+        <div class="q-pa-sm" v-if="!screenSize">
+          <div>
+            <q-tabs>
+              <q-route-tab to="/main" label="Главная" class="text-white justify-between" icon="mail"/>
+              <q-route-tab to="/basket" label="Корзина" class="text-white justify-between" icon="mail"/>
+              <q-route-tab to="/catalog" label="Каталог" class="text-white" icon="mail"/>
+              <q-route-tab to="/about" label="О нас" class="text-white" icon="book"/>
+              <q-btn @click="signOut()">Выйти</q-btn>
+            </q-tabs>
+          </div>
+        </div>
       </q-toolbar>
     </q-header>
+
+    <q-drawer
+      v-model="drawerLeft"
+      :width="200"
+      :breakpoint="600"
+      class="bg-black"
+      show-if-above
+      v-if="screenSize"
+    >
+      <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+        <q-list padding>
+          <q-item clickable v-ripple to="/main" class="text-white">
+            <q-item-section avatar>
+              <q-icon name="inbox" color="white"/>
+            </q-item-section>
+
+            <q-item-section class="text-white">
+              Главная
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple to="/basket" class="text-white">
+            <q-item-section avatar>
+              <q-icon name="delete"/>
+            </q-item-section>
+
+            <q-item-section>
+              Корзина
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple to="/about" class="text-white">
+            <q-item-section avatar>
+              <q-icon name="send"/>
+            </q-item-section>
+
+            <q-item-section>
+              О нас
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple to="/catalog" class="text-white">
+            <q-item-section avatar>
+              <q-icon name="drafts"/>
+            </q-item-section>
+
+            <q-item-section>
+              каталог
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
+      <q-img class="absolute-top" style="height: 150px">
+        <div class="absolute-bottom bg-transparent">
+          <q-avatar size="56px" class="q-mb-sm">
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+          </q-avatar>
+          <div class="text-weight-bold">{{ username }}</div>
+        </div>
+      </q-img>
+    </q-drawer>
     <q-page-container class="bg-black">
       <router-view/>
     </q-page-container>
@@ -34,11 +96,27 @@
 </template>
 <script setup>
 import {useAuth0} from '@auth0/auth0-vue';
-const {logout,user} = useAuth0()
+import {ref} from 'vue'
+
+const {user, logout} = useAuth0()
+const username = user.value.name
 const signOut = () => {
   logout()
 }
+const drawerLeft = ref(false)
 
+/*
+-------------SCREEN SIZE---------------
+*/
+let screenSize = false
+
+
+const resizeScreen = () => {
+  console.log(screenSize)
+  screenSize = window.innerWidth <= 800
+}
+window.addEventListener('resize', resizeScreen)
+resizeScreen()
 </script>
 <style>
 .header_title {

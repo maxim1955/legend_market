@@ -1,9 +1,7 @@
 <template>
   <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/main_logo.svg"
-    >
+
+    <q-img src="~assets/main_logo.svg" />
     <div class="text-white text-h2 absolute main-title" >
       <q-tabs
         inline-label>

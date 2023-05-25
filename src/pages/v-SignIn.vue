@@ -19,11 +19,10 @@
 * -------------Import--------
 */
 import {useRouter} from "vue-router";
-import {ref} from "vue";
 import {useAuth0} from '@auth0/auth0-vue';
 
 const router = useRouter()
-const {loginWithRedirect, user, isAuthenticated} = useAuth0()
+const {loginWithRedirect} = useAuth0()
 
 /*
 * -------------register--------
@@ -32,9 +31,6 @@ const submit = () => {
   loginWithRedirect()
   router.push('/main')
 }
-console.log(user)
-console.log(isAuthenticated)
-
 /*
 * redirect to loggedin
 */
