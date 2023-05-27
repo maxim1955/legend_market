@@ -27,6 +27,7 @@
       </div>
       <div class="input" style="max-width: 25%">
         <q-input
+          clearable
           dark
           filled
           outlined
@@ -51,21 +52,53 @@
           />
           <q-card-actions class="justify-around">
             <q-card-section>
-              <div class="text-h6 text-white">{{ res.name }}</div>
+              <div class="text-h6 text-white flex wrap">{{ res.name }}</div>
               <div class="text-h5 text-white">${{ res.price }}</div>
             </q-card-section>
           </q-card-actions>
 
           <q-card-section
-            class="self-center col flex justify-end">
+            class="self-center col flex justify-end column">
             <q-btn
-              class="bg-green-2 q-pl-xl-xl"
+              class="bg-green-2 q-pl-xl-xl "
               @click="addToBasket(res,index)">Купить
+            </q-btn>
+            <q-btn
+              class="bg-green-2 q-pl-xl-xl q-mt-md row"
+              @click="dialogDesc(res)">Подробнее
             </q-btn>
           </q-card-section>
         </q-card-section>
       </q-card>
     </div>
+
+    <q-dialog v-model="card">
+      <q-card class="my-card">
+        <q-img
+          :src='dialogData.image'/>
+
+        <q-card-section>
+          <div class="row wrap items-center">
+            <div class="col text-h6 ellipsis">
+              {{ dialogData.name }}
+            </div>
+          </div>
+        </q-card-section>
+        <q-separator/>
+        <q-card-section class="q-pt-none">
+          <div class="text-caption text-grey">
+            {{ dialogData.description }}
+          </div>
+        </q-card-section>
+        <q-separator/>
+
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat color="red" label="Закрыть"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -73,7 +106,18 @@
 import {getCoin} from "stores/coin";
 import {computed, ref} from "vue";
 /*
-GET_COIN_FROM_HASURA
+* POP-UP
+*/
+const card = ref(false)
+const dialogData = ref('')
+const dialogDesc = (res) => {
+  dialogData.value = res
+  card.value = !card.value
+}
+
+
+/*
+-------------------GET_COIN_FROM_HASURA
 */
 const store = getCoin()
 store.GET_COIN_FROM_DB()
@@ -81,16 +125,15 @@ const coin = store.SET_COIN_FROM_DB
 console.log(coin);
 
 /*
-Add to basket
+--------------------Add to basket
 */
 const addToBasket = (res, index) => {
   const bsk = {...res}
   store.GET_BASKET(bsk, res)
-  console.log(index);
 }
 
 /*
-filterCOIN
+--------------------filterCOIN
 */
 
 const option = [

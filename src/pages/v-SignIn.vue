@@ -5,7 +5,6 @@
           @submit.prevent
           class="q-gutter-md"
       >
-        <h2 class="text-white text-center">Регистрация</h2>
         <div class="text-center q-mt-xl">
           <q-btn label="Войти на биржу" type="submit" @click="submit" color="primary" size="30px" rounded/>
         </div>

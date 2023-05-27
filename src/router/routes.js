@@ -15,7 +15,6 @@ const routes = [
     component: () => import('layouts/FirsLayouts.vue'),
     children: [
       {path: '/', component: () => import('pages/v-SignIn.vue')},
-      {path: '/loggedin', component: () => import('pages/v-LoggedIn.vue')}
     ]
   },
 

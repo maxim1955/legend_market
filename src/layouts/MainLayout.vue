@@ -1,19 +1,22 @@
 <template>
   <q-layout view="hhh lpR fff">
-    <q-header class="bg-black text-white flex" height-hint="98" style="height: 100px">
-      <q-toolbar class="row">
+    <q-header class="bg-black text-white flex " height-hint="98" style="height: 100px">
+      <q-toolbar class="row flex justify-between">
         <q-toolbar-title shrink>
           <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu" v-if="screenSize"/>
           <router-link to="/main" class="text-center text-white text-italic text-h1">LegendMarket</router-link>
         </q-toolbar-title>
         <div class="q-pa-sm" v-if="!screenSize">
           <div>
-            <q-tabs>
-              <q-route-tab to="/main" label="Главная" class="text-white justify-between" icon="mail"/>
-              <q-route-tab to="/basket" label="Корзина" class="text-white justify-between" icon="mail"/>
+            <q-tabs >
+              <q-route-tab to="/main" label="Главная" class="text-white " icon="mail"/>
+              <q-route-tab to="/basket" label="Корзина" class="text-white " icon="mail"/>
               <q-route-tab to="/catalog" label="Каталог" class="text-white" icon="mail"/>
               <q-route-tab to="/about" label="О нас" class="text-white" icon="book"/>
               <q-btn @click="signOut()">Выйти</q-btn>
+              <q-item>
+                {{ username}}
+              </q-item>
             </q-tabs>
           </div>
         </div>
